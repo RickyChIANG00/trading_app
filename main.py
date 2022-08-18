@@ -24,7 +24,14 @@ def stock_detail(request: Request, symbol):
     connection.row_factory = sqlite3.Row
     cursor = connection.cursor()
     cursor.execute("""
-        SELECT * FROM stock  WHERE symbol = ? 
-    """, (symbol))
-    rows = cursor.fetchone()
-    return templates.TemplateResponse("stock_detail.html", {"request": request, "stocks": rows}) 
+        SELECT * FROM stock WHERE symbol = ? 
+    """, (symbol, ))
+    row = cursor.fetchone()
+
+    cursor.execute("""
+        SELECT * FROM stock_price WHERE stock_id = ? ORDER BY date
+    """, (row["id"], ))
+    
+    prices = cursor.fetchall()
+
+    return templates.TemplateResponse("stock_detail.html", {"request": request, "stock" : row, "prices" : prices}) 
