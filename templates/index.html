@@ -1,16 +1,33 @@
 <html>
     <head>
         <title>Stocks</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
     </head>
     <body>
-    <table>
-        {% for stock in stocks %}
-        <tr>
+    <div class = "ui container">
+    <h1>Stock List</h1>
+    <table class="ui striped table">
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>graph</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+            <tr>
             <td>{{stock.id}}</td>
             <td>{{stock.symbol}}</td>
-            <td>{{stock.name}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+            <td><a href="/stock/{{ stock.symbol }}">{{stock.name}}</a></td>
+            <td>No</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
     </body>
 </html>
